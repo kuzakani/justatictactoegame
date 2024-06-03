@@ -173,10 +173,6 @@ function checkingWins(moves) {
 
         
 
-
-
-
-
 var playedMarks = [];
 var oMoves = [];
 var xMoves = [];
@@ -212,20 +208,24 @@ boxes.forEach((box, index) => {
                    oMoves.push(index);
                    if (checkingWins(oMoves)) {
                     document.querySelector(".Owins").classList.add("color");
+                    gameOver();
                 }
                    oes[index].classList.add("reappear");
              } else {
                 xMoves.push(index);
+                xes[index].classList.add("reappear");
 
                 if (checkingWins(xMoves)) {
                     document.querySelector(".Xwins").classList.add("color");
+                    gameOver();
                 }
 
-                xes[index].classList.add("reappear");
+               
                 
                 
              } if (playedMarks.length === 9  && !checkingWins(xMoves) && !checkingWins(xMoves) ) {
                 document.querySelector(".draw").classList.add("color");
+                gameOver();
              }
 
             }
@@ -240,7 +240,17 @@ function checkingWins(patterns) {
 }
 
 
+function gameOver() {
+    playedMarks = [];
+    xMoves = [];
+    oMoves = [];
 
+    oes.forEach((o, num) => {
+        o.classList.add("disappear");
+    }) 
+
+    
+}
 
 
 
