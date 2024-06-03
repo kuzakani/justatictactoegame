@@ -184,6 +184,9 @@ var Xwins = document.querySelector(".Xwins");
 var xes = document.querySelectorAll(".xmark");
 var oes = document.querySelectorAll(".omark");
 
+var fullIndices = [0,1,2,3,4,5,6,7,8];
+var leftBoxes = fullIndices.filter(spot => !playedMarks.includes(spot));
+
 var winningCombinations = [
     [0, 1, 2], // Row 1
     [3, 4, 5], // Row 2
@@ -201,14 +204,15 @@ boxes.forEach((box, index) => {
             
             if (!box.classList.contains("clicked")) {
 
-                box.classList.add("clicked")
+                box.classList.add("clicked");
                 playedMarks.push(index);
 
              if (playedMarks.length % 2 === 0) {
                    oMoves.push(index);
                    if (checkingWins(oMoves)) {
                     document.querySelector(".Owins").classList.add("color");
-                    gameOver();
+                    gameOverForX();
+                    
                 }
                    oes[index].classList.add("reappear");
              } else {
@@ -217,7 +221,7 @@ boxes.forEach((box, index) => {
 
                 if (checkingWins(xMoves)) {
                     document.querySelector(".Xwins").classList.add("color");
-                    gameOver();
+                    gameOverForO();
                 }
 
                
@@ -225,7 +229,7 @@ boxes.forEach((box, index) => {
                 
              } if (playedMarks.length === 9  && !checkingWins(xMoves) && !checkingWins(xMoves) ) {
                 document.querySelector(".draw").classList.add("color");
-                gameOver();
+                
              }
 
             }
@@ -240,17 +244,53 @@ function checkingWins(patterns) {
 }
 
 
-function gameOver() {
+function gameOverForO() {
     playedMarks = [];
     xMoves = [];
     oMoves = [];
 
     oes.forEach((o, num) => {
-        o.classList.add("disappear");
+        o.classList.remove("reappear");
     }) 
 
+  
+    for (let i = 0; i < 9; i++) {
+        boxes[leftBoxes[i]].addEventListener("click", () => {
+            boxes[leftBoxes[i]].innerHTML = "<div></div>"
+        })
+    }
+           
+     
     
 }
+
+function gameOverForX() {
+    playedMarks = [];
+    xMoves = [];
+    oMoves = [];
+
+    xes.forEach((x, num) => {
+        x.classList.remove("reappear");
+    }) 
+
+
+
+    for (let i = 0; i < 9; i++) {
+        boxes[leftBoxes[i]].addEventListener("click", () => {
+            boxes[leftBoxes[i]].innerHTML = "<div></div>"
+        })
+    }
+      
+    
+}
+
+
+
+
+
+
+
+
 
 
 
